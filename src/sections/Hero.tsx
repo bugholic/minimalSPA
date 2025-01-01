@@ -1,18 +1,47 @@
-import { FC } from "react";
+"use client";
+
+import { FC, useEffect } from "react";
 /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
 import heroImage from "@/assets/images/hero-image.jpg";
 import Image from "next/image";
 import { Button } from "@/components/Button";
+import SplitType from "split-type";
+import { motion, useAnimate } from "motion/react";
+import { transform } from "next/dist/build/swc";
+import { stagger } from "motion";
 
 const Hero: FC = () => {
+  const [titleScope, titleAnimate] = useAnimate();
+  useEffect(() => {
+    new SplitType(titleScope.current, {
+      types: "lines,words",
+      tagName: "span",
+    });
+
+    titleAnimate(
+      titleScope.current.querySelectorAll(".word"),
+      {
+        transform: "translateY(0)",
+      },
+      {
+        duration: 0.5,
+        delay: stagger(0.1),
+      }
+    );
+  }, []);
   return (
     <section>
       <div className="grid md:grid-cols-12 md:h-screen items-strech">
         <div className="md:col-span-7 flex flex-col justify-center">
           <div className="container !max-w-full">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl mt-40 md:mt-0">
+            <motion.h1
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-5xl md:text-6xl lg:text-7xl mt-40 md:mt-0"
+              ref={titleScope}
+            >
               Crafting digital experiences through code and creative design
-            </h1>
+            </motion.h1>
             <div className="flex flex-col md:flex-row md:items-center mt-10 items-start gap-6">
               <Button
                 variant="secondary"
@@ -41,7 +70,11 @@ const Hero: FC = () => {
         </div>
         <div className="md:col-span-5">
           <div className="mt-20 md:mt-0 md:h-full">
-            <Image src={heroImage} alt="myportrait" className="size-full object-cover" />
+            <Image
+              src={heroImage}
+              alt="myportrait"
+              className="size-full object-cover"
+            />
           </div>
         </div>
       </div>
