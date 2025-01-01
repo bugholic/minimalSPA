@@ -8,23 +8,23 @@ import { FC, useEffect } from "react";
 const Footer: FC = () => {
   const navItems = [
     {
-      href: "#",
-      label: "Home",
+      href: "#intro",
+      label: "About",
     },
     {
-      href: "#",
+      href: "#projects",
       label: "Projects",
     },
     {
-      href: "#",
+      href: "#testimonials",
       label: "Testomonials",
     },
     {
-      href: "#",
+      href: "#faqs",
       label: "Faqs",
     },
     {
-      href: "#",
+      href: "#contact",
       label: "Contact",
     },
   ];
