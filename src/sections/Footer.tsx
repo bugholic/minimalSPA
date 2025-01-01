@@ -3,7 +3,7 @@
 import { Button } from "@/components/Button";
 import useTextRevealAnimation from "@/hooks/useTextRevealAnimation";
 import { useInView } from "motion/react";
-import { FC, useEffect } from "react";
+import React, { FC, useEffect, MouseEvent } from "react";
 
 const Footer: FC = () => {
   const navItems = [
@@ -37,6 +37,20 @@ const Footer: FC = () => {
       entranceAnimation();
     }
   }, [inView, entranceAnimation]);
+
+  
+    const handleNavItemClicks = (e: MouseEvent<HTMLAnchorElement>) => {
+      e.preventDefault();
+  
+      const url = new URL(e.currentTarget.href);
+      const hash = url.hash; 
+  
+      const target = document.querySelector(hash);
+  
+      if (!target) return;
+      target.scrollIntoView({ behavior: "smooth" });
+    };
+
 
   return (
     <footer className="bg-stone-900 text-white" id="contact">
@@ -99,7 +113,7 @@ const Footer: FC = () => {
             <div>
               <nav className="flex flex-col md:items-end gap-8 mt-16 md:mt-0">
                 {navItems.map(({ href, label }) => (
-                  <a href={href} key={label}>
+                  <a href={href} key={label} onClick={handleNavItemClicks}>
                     <Button variant="text" className="text-lg">
                       {label}
                     </Button>
