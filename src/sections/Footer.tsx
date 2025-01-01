@@ -1,6 +1,9 @@
+"use client";
+
 import { Button } from "@/components/Button";
-import { a, label } from "motion/react-client";
-import { FC } from "react";
+import useTextRevealAnimation from "@/hooks/useTextRevealAnimation";
+import { useInView } from "motion/react";
+import { FC, useEffect } from "react";
 
 const Footer: FC = () => {
   const navItems = [
@@ -25,37 +28,68 @@ const Footer: FC = () => {
       label: "Contact",
     },
   ];
+
+  const { scope, entranceAnimation } = useTextRevealAnimation();
+  const inView = useInView(scope);
+
+  useEffect(() => {
+    if (inView) {
+      entranceAnimation();
+    }
+  }, [inView, entranceAnimation]);
+
   return (
     <footer className="bg-stone-900 text-white" id="contact">
       <div className="container">
         <div className="section">
           <div className="flex items-center gap-3">
-            <div className="size-3 rounded-full bg-green-400"></div>
+            <div className="size-3 rounded-full bg-green-400 animate-pulse"></div>
             <span className="uppercase">One spot available for next month</span>
           </div>
-          <div className="grid md:grid-cols-3 md:items-center"> 
+          <div className="grid md:grid-cols-3 md:items-center">
             <div className="md:col-span-2">
-              <h2 className="text-4xl md:text-7xl lg:text-8xl mt-8 font-extralight">
+              <h2
+                className="text-4xl md:text-7xl lg:text-8xl mt-8 font-extralight"
+                ref={scope}
+              >
                 Enough talk. Let's make something together
               </h2>
               <div className="mt-8">
                 <Button
                   variant="secondary"
                   iconAfter={
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth="1.5"
-                      stroke="currentColor"
-                      className="size-6"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
-                      />
-                    </svg>
+                    <div className="overflow-hidden size-6">
+                      <div className="h-6 w-12 flex group-hover/button:-translate-x-1/2 transition-transform duration-300">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth="1.5"
+                          stroke="currentColor"
+                          className="size-6"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
+                          />
+                        </svg>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth="1.5"
+                          stroke="currentColor"
+                          className="size-6"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
+                          />
+                        </svg>
+                      </div>
+                    </div>
                   }
                 >
                   info@alextaylor.com
